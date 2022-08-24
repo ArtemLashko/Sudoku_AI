@@ -1,7 +1,5 @@
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="static/img/puffer-fish.png" alt="Logo" 
-    width="80" height="80" style="margin-top: 15px">
   </a>
 
   <h3 align="center">SudokuAI</h3>
