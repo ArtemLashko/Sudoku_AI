@@ -27,16 +27,43 @@
 <div>
 <img src = "images/1.jpeg" style="max-width: 100%">
 <img src = "images/2.jpg" style="max-width: 100%">
+<p>First step: the program takes a picture of a board and uses Gaussian Blur, adaptive thresholding, and dilation. </p>
 <img src = "images/3.jpg" style="max-width: 100%">
+<p>Second step: It finds the largest polygon from the prepared image and crops it out of the original image.</p>
 <img src = "images/4.jpg" style="max-width: 100%">
+<p>Third step: Since our ML model is taught on grayscale images, we need to change
+our image to grayscale.
+</p>
 </div>
 
 <!-- Removing noise in the picture -->
 ## Removing noise in the picture
 <div>
+<p>We resize our image to a square 450px x 450px,
+and iterate over 50px*50px cells.
+</p>
+<ul>
+  <li><p>This is our input.</p>
+<p>As we can see, it has a lot of noise and unnecessary borders.</p>
 <img src = "images/cell2.jpg" style="max-width: 100%">
-<img src = "images/cell3.jpg" style="max-width: 100%">
-<img src = "images/cell4.jpg" style="max-width: 100%">
+</li>
+  <li><p>What do we know about a cell?</p>
+    <p> 1. Some part of a digit should be located somewhere in the center.</p>
+    <p> 2. All digits (0-9) are connected graphs ideally.</p>
+    <p> So, let's clear our picture. So, let's clear our picture. Colors in the grayscale are in a range from 0 (Black) to 255 (White). 
+    <p> We won't have clear black or white colors. So let's say that if a pixel has at least 1/2 of 255, it is white. In practice, it works great.
+</p>
+    <p> Let's iterate over the center of the picture and dfs on white cells.
+</p>
+<p> If we are at the white pixel, we should also check pixels nearby (point number 2) and include them.
+</p>
+<p> All visited cells we add on the new photo, and we have a picture without noise and without any borders (Since we won't go there in a dfs).
+</p>
+<img src = "images/cell3.jpg" style="max-width: 100%"></li>
+  <li>
+<p>Final step: center the image.</p>
+<img src = "images/cell4.jpg" style="max-width: 100%"></li>
+</ul>
 </div>
 
 
