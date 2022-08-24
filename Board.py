@@ -14,8 +14,12 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 # Use ESC to close app window
 ESC_KEY = 27
 
-def debug(x):
+def debug(x, filename):
+    image_path = r'"C:\Users\ilart\Downloads\SudokuAI\"'
     cv2.imshow('Image', x)
+    # Using cv2.imwrite() method
+    # Saving the image
+    cv2.imwrite(filename, x)
     while True:
         if cv2.waitKey(1) & 0xFF == ESC_KEY:
             break
@@ -92,6 +96,7 @@ class Board:
         return image_temp
 
     def extract_features(self, img):
+        debug(img, "images/cell2.jpg")
         rows, cols = img.shape
         image_temp = img.copy()
         for i in range(rows):
@@ -139,7 +144,7 @@ class Board:
         contours, h = cv2.findContours(image_resize, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         contours = sorted(contours, key=cv2.contourArea, reverse=True)
         # area = cv2.contourArea(contours[0])
-        if (self.TESTING):
+        if self.TESTING:
             image_resize_2 = np.reshape(image_resize, (1, 28, 28, 1)).astype("float32")
         else:
             image_resize_2 = np.expand_dims(image_resize, axis=0).astype(
@@ -166,13 +171,16 @@ class Board:
             for j in range(9):
                 image = sudoku[i * 50:(i + 1) * 50, j * 50:(j + 1) * 50]
 
+                debug(image, "images/cell1.jpg")
+
                 # Extracting a largest feature
                 image_revised = self.extract_features(image)
-
+                debug(image_revised, "images/cell3.jpg")
                 # If our image contains a digit, it will have sum > 3000
                 if image_revised.sum() > 3000:
                     # Now we need to center our image
                     centered_image = self.center_image(image_revised)
+                    debug(centered_image, "images/cell4.jpg")
                     grid[i][j] = self.identify_number(centered_image)
                 else:
                     grid[i][j] = 0

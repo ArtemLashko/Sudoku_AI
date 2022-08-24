@@ -7,8 +7,12 @@ import time
 ESC_KEY = 27
 
 
-def debug(x):
+def debug(x, filename):
+    image_path = r'"C:\Users\ilart\Downloads\SudokuAI\"'
     cv2.imshow('Image', x)
+    # Using cv2.imwrite() method
+    # Saving the image
+    cv2.imwrite(filename, x)
     while True:
         if cv2.waitKey(1) & 0xFF == ESC_KEY:
             break
@@ -40,6 +44,7 @@ class Parser:
 
         # Prepare our image
         self.prepared_image = self.prepare_image()
+        debug(self.prepared_image, "images/2.jpg")
 
         # debug(self.prepared_image)
         # debug(pre_process_image(self.original_img))
@@ -52,9 +57,9 @@ class Parser:
     # This function extracts a square board from a picture
     def parse_board(self):
         res = self.find_the_board()
-        debug(res)
+        debug(res, "images/3.jpg")
         res_inverted = cv2.bitwise_not(res, res)
-        debug(res_inverted)
+        debug(res_inverted, "images/4.jpg")
         # return res_inverted
         return res
 
